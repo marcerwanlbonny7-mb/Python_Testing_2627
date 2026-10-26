@@ -16,6 +16,10 @@ Les dates et heures ci-dessous sont celles des pushes réels.
 | 2026-10-26 16:44:55 | `bug/limite-12-cumulee` | `d2036f6` | Limite de 12 places contournable en réservant deux fois |
 | 2026-10-26 16:46:51 | `bug/messages-specs` | `b69e9d4` | Messages non conformes aux spécifications |
 | 2026-10-26 17:18:51 | `style/flake8-cleanup` | `241a175` | 28 erreurs de style (voir rapport flake8) |
+| 2026-10-26 17:36:41 | `bug/competitions-passees` | `782308c` | Réservations encore possibles dans des compétitions passées |
+| 2026-10-26 18:53:32 | `bug/session-club` | `10aca08` | Réservation possible sans connexion, et au nom d'un autre club |
+| 2026-10-26 19:02:42 | `bug/gestion-erreurs` | `e558f97` | Erreurs brutales (404/500, champs manquants, JSON cassé) |
+| 2026-10-26 19:04:27 | `feature/points-board` | `594eaf3` | Nouveauté : tableau public des points sur `/points` |
 
 ---
 
@@ -128,6 +132,73 @@ Voir [flake8.md](flake8.md).
 
 ---
 
+### 9. Réservations dans des compétitions passées — `bug/competitions-passees`
+
+**Le problème :** le site affichait des compétitions déjà terminées (dates de
+2020) et permettait d'y réserver, alors que les specs n'autorisent que les
+compétitions **à venir**.
+
+**La correction :** une seule fonction vérifie la date. Les compétitions
+passées n'apparaissent plus sur la page d'accueil, la page de réservation les
+refuse avec « This competition has already taken place », et un envoi direct
+du formulaire est bloqué pareil. Les dates de démonstration ont été mises à
+jour en 2027.
+
+**Tests :** 6 tests (liste filtrée, page de réservation bloquée, POST bloqué,
+places et points inchangés en cas de refus).
+
+---
+
+### 10. Réservation sans connexion et au nom d'un autre club — `bug/session-club`
+
+**Le problème :** n'importe qui pouvait réserver sans jamais se connecter, et
+en modifiant le formulaire pouvait réserver **au nom d'un autre club** — un
+club pouvait dépenser les points d'un autre.
+
+**La correction :** une connexion par email est obligatoire avant toute
+réservation : « Please log in first ». Chaque réservation est vérifiée contre
+le club de la session : « You can only make bookings for your own club » —
+et rien n'est modifié si le club ne correspond pas. La déconnexion efface
+bien la session.
+
+**Tests :** 8 nouveaux tests de sécurité (accès sans session, club différent,
+POST direct sans connexion, changement de session après logout).
+
+---
+
+### 11. Erreurs brutales de l'application — `bug/gestion-erreurs`
+
+**Le problème :** une URL inconnue montrait la page technique de Flask, une
+erreur interne aussi, un champ manquant dans un formulaire plantait la page,
+et un fichier `clubs.json`/`competitions.json` cassé faisait planter le
+démarrage sans explication.
+
+**La correction :** pages 404 et 500 personnalisées avec un lien vers
+l'accueil, tous les champs de formulaire sont lus sans planter (message
+d'erreur à la place), et le chargement des JSON échoue proprement avec un
+message clair du type « ERROR: clubs.json is not valid JSON. ».
+
+**Tests :** 11 nouveaux (page 404, page 500, champs manquants, fichiers
+absents/corrompus).
+
+---
+
+### 12. Nouveauté : tableau public des points — `feature/points-board`
+
+**Le besoin (spec) :** les specs demandent un classement public en lecture
+seule des points de tous les clubs, consultable **sans connexion** pour
+déterminer le club gagnant.
+
+**La réalisation :** nouvelle route `GET /points` (aucune modification
+possible — un POST renvoie 405), qui affiche les clubs **triés du plus de
+points au moins de points**, avec le rang de chaque club. Un lien « View the
+club leaderboard » a été ajouté sur la page d'accueil.
+
+**Tests :** 6 tests (accès sans connexion, tous les clubs, points affichés,
+ordre décroissant, méthode POST refusée, lien depuis l'accueil).
+
+---
+
 ## Évolution du nombre de tests
 
 | Étape | Tests |
@@ -139,3 +210,7 @@ Voir [flake8.md](flake8.md).
 | Après correction 5 | 29 |
 | Après correction 6 | 34 |
 | Après nettoyage flake8 | 34 (inchangé, tous verts) |
+| Après correction 9 (compétitions passées) | 40 |
+| Après correction 10 (session) | 48 |
+| Après correction 11 (erreurs) | 59 |
+| Après nouveauté `/points` | 65 |
