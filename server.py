@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from flask import Flask, render_template, request, redirect, flash, url_for
 
 
@@ -12,6 +13,11 @@ def loadCompetitions():
     with open('competitions.json') as comps:
         listOfCompetitions = json.load(comps)['competitions']
         return listOfCompetitions
+
+
+def isUpcoming(competition):
+    compDate = datetime.strptime(competition['date'], '%Y-%m-%d %H:%M:%S')
+    return compDate >= datetime.now()
 
 
 app = Flask(__name__)
@@ -35,8 +41,9 @@ def showSummary():
         flash("Unknown email, please try again")
         return redirect(url_for('index'))
     club = found[0]
+    upcoming = [c for c in competitions if isUpcoming(c)]
     return render_template(
-        'welcome.html', club=club, competitions=competitions
+        'welcome.html', club=club, competitions=upcoming
     )
 
 
@@ -48,6 +55,9 @@ def book(competition, club):
     ]
     if not foundClub or not foundCompetition:
         flash("Something went wrong-please try again")
+        return redirect(url_for('index'))
+    if not isUpcoming(foundCompetition[0]):
+        flash("This competition has already taken place")
         return redirect(url_for('index'))
     return render_template(
         'booking.html', club=foundClub[0], competition=foundCompetition[0]
@@ -66,6 +76,9 @@ def purchasePlaces():
         return redirect(url_for('index'))
     competition = foundCompetition[0]
     club = foundClub[0]
+    if not isUpcoming(competition):
+        flash("This competition has already taken place")
+        return redirect(url_for('index'))
     bookingUrl = url_for(
         'book', competition=competition['name'], club=club['name']
     )
