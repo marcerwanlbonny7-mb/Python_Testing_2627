@@ -14,7 +14,9 @@ def book_places(client, competition, club, places):
 
 
 def login(client, email):
-    return client.post("/showSummary", data={"email": email}, follow_redirects=True)
+    return client.post(
+        "/showSummary", data={"email": email}, follow_redirects=True
+    )
 
 
 class TestPointsDeduction:
