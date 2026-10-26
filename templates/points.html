@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUDLFT Leaderboard</title>
+</head>
+<body>
+    <h1>GUDLFT Leaderboard</h1>
+    <p>Club ranking, read-only. The leading club wins the competition.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Club</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for club in clubs %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ club.name }}</td>
+                <td>{{ club.points }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><a href="/">Back to the registration portal</a></p>
+</body>
+</html>

@@ -63,6 +63,14 @@ def internalError(error):
     return render_template('500.html'), 500
 
 
+@app.route('/points')
+def pointsBoard():
+    ranking = sorted(
+        clubs, key=lambda c: int(c['points']), reverse=True
+    )
+    return render_template('points.html', clubs=ranking)
+
+
 @app.route('/showSummary', methods=['POST'])
 def showSummary():
     email = request.form.get('email')
