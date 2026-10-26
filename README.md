@@ -75,9 +75,10 @@ Merci !
     We also like to show how well we're testing, so there's a module called 
     [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
    
- 6. Flake8 Report 
+ 6. Rapports
 
-    See [reports/flake8.md](reports/flake8.md) — **0 errors**, all files compliant with PEP 8.
-
-    Bug fixes are documented in [reports/corrections.md](reports/corrections.md).
+    * Flake8 : [reports/flake8.md](reports/flake8.md) — **0 erreur**, tout le code conforme au PEP 8.
+    * Corrections : [reports/corrections.md](reports/corrections.md) — chaque bogue corrigé, daté du push réel.
+    * Tests : [reports/tests.md](reports/tests.md) — **71 tests verts, 100 % de couverture**.
+    * Performance : [reports/performance.md](reports/performance.md) — Locust, 6 utilisateurs, 0 échec.
 
