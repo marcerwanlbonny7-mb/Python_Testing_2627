@@ -5,3 +5,5 @@ lib
 venv/
 .envrc
 __pycache__
+.coverage
+.pytest_cache
