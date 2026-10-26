@@ -6,15 +6,33 @@ from flask import (
 
 
 def loadClubs():
-    with open('clubs.json') as c:
-        listOfClubs = json.load(c)['clubs']
-        return listOfClubs
+    try:
+        with open('clubs.json') as c:
+            return json.load(c)['clubs']
+    except FileNotFoundError:
+        raise SystemExit(
+            "ERROR: clubs.json not found. Cannot start the application."
+        )
+    except json.JSONDecodeError:
+        raise SystemExit("ERROR: clubs.json is not valid JSON.")
+    except KeyError:
+        raise SystemExit("ERROR: clubs.json is missing the 'clubs' key.")
 
 
 def loadCompetitions():
-    with open('competitions.json') as comps:
-        listOfCompetitions = json.load(comps)['competitions']
-        return listOfCompetitions
+    try:
+        with open('competitions.json') as comps:
+            return json.load(comps)['competitions']
+    except FileNotFoundError:
+        raise SystemExit(
+            "ERROR: competitions.json not found. Cannot start the app."
+        )
+    except json.JSONDecodeError:
+        raise SystemExit("ERROR: competitions.json is not valid JSON.")
+    except KeyError:
+        raise SystemExit(
+            "ERROR: competitions.json is missing the 'competitions' key."
+        )
 
 
 def isUpcoming(competition):
@@ -35,9 +53,19 @@ def index():
     return render_template('index.html')
 
 
+@app.errorhandler(404)
+def pageNotFound(error):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internalError(error):
+    return render_template('500.html'), 500
+
+
 @app.route('/showSummary', methods=['POST'])
 def showSummary():
-    email = request.form['email']
+    email = request.form.get('email')
     found = [club for club in clubs if club['email'] == email]
     if not found:
         flash("Unknown email, please try again")
@@ -83,9 +111,9 @@ def purchasePlaces():
         return redirect(url_for('index'))
     foundCompetition = [
         c for c in competitions
-        if c['name'] == request.form['competition']
+        if c['name'] == request.form.get('competition')
     ]
-    foundClub = [c for c in clubs if c['name'] == request.form['club']]
+    foundClub = [c for c in clubs if c['name'] == request.form.get('club')]
     if not foundCompetition or not foundClub:
         flash("Something went wrong-please try again")
         return redirect(url_for('index'))
@@ -98,7 +126,7 @@ def purchasePlaces():
         'book', competition=competition['name'], club=club['name']
     )
     try:
-        placesRequired = int(request.form['places'])
+        placesRequired = int(request.form.get('places'))
     except (ValueError, TypeError):
         flash("Invalid number of places")
         return redirect(bookingUrl)
