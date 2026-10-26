@@ -28,6 +28,7 @@ def login(client, email):
 
 
 def book_places(client, competition, club, places):
+    client.post("/showSummary", data={"email": EMAIL})
     return client.post(
         "/purchasePlaces",
         data={"competition": competition, "club": club, "places": places},
@@ -63,6 +64,7 @@ class TestPastCompetitionNotListed:
 class TestPastCompetitionNotBookable:
     def test_booking_page_rejects_past_competition(self, client):
         set_date(SPRING, past_date())
+        login(client, EMAIL)
 
         response = client.get(
             f"/book/{SPRING}/{CLUB}", follow_redirects=True

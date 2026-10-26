@@ -7,6 +7,7 @@ EMAIL = "john@simplylift.co"
 
 
 def book_places(client, competition, club, places):
+    client.post("/showSummary", data={"email": EMAIL})
     return client.post(
         "/purchasePlaces",
         data={"competition": competition, "club": club, "places": places},

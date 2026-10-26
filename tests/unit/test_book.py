@@ -1,6 +1,14 @@
+import pytest
+
 VALID_CLUB = "Simply Lift"
+VALID_EMAIL = "john@simplylift.co"
 VALID_COMPETITION = "Spring Festival"
 FAKE_NAME = "Nonexistent Thing"
+
+
+@pytest.fixture(autouse=True)
+def login(client):
+    client.post("/showSummary", data={"email": VALID_EMAIL})
 
 
 class TestBook:
@@ -32,4 +40,4 @@ class TestBook:
             f"/book/{VALID_COMPETITION}/{FAKE_NAME}", follow_redirects=True
         )
 
-        assert b"Something went wrong" in response.data
+        assert b"only make bookings for your own club" in response.data

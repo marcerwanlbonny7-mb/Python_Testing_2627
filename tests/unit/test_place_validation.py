@@ -1,8 +1,16 @@
 import re
 
+import pytest
+
 VALID_CLUB = "Simply Lift"
+VALID_EMAIL = "john@simplylift.co"
 VALID_COMPETITION = "Spring Festival"
 FULL_COMPETITION = "Fall Classic"
+
+
+@pytest.fixture(autouse=True)
+def login(client):
+    client.post("/showSummary", data={"email": VALID_EMAIL})
 
 
 def places_available(client, competition, club):

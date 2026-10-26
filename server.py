@@ -1,6 +1,8 @@
 import json
 from datetime import datetime
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import (
+    Flask, render_template, request, redirect, flash, url_for, session
+)
 
 
 def loadClubs():
@@ -41,6 +43,7 @@ def showSummary():
         flash("Unknown email, please try again")
         return redirect(url_for('index'))
     club = found[0]
+    session['club'] = club['name']
     upcoming = [c for c in competitions if isUpcoming(c)]
     return render_template(
         'welcome.html', club=club, competitions=upcoming
@@ -49,6 +52,12 @@ def showSummary():
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
+    if session.get('club') != club:
+        if session.get('club'):
+            flash("You can only make bookings for your own club")
+        else:
+            flash("Please log in first")
+        return redirect(url_for('index'))
     foundClub = [c for c in clubs if c['name'] == club]
     foundCompetition = [
         c for c in competitions if c['name'] == competition
@@ -66,6 +75,12 @@ def book(competition, club):
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchasePlaces():
+    if not session.get('club'):
+        flash("Please log in first")
+        return redirect(url_for('index'))
+    if request.form.get('club') != session.get('club'):
+        flash("You can only make bookings for your own club")
+        return redirect(url_for('index'))
     foundCompetition = [
         c for c in competitions
         if c['name'] == request.form['competition']
@@ -123,4 +138,5 @@ def purchasePlaces():
 
 @app.route('/logout')
 def logout():
+    session.clear()
     return redirect(url_for('index'))

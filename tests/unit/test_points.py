@@ -3,9 +3,15 @@ RICH_EMAIL = "john@simplylift.co"
 POOR_CLUB = "Iron Temple"
 POOR_EMAIL = "admin@irontemple.com"
 VALID_COMPETITION = "Spring Festival"
+CLUB_EMAILS = {
+    "Simply Lift": "john@simplylift.co",
+    "Iron Temple": "admin@irontemple.com",
+    "She Lifts": "kate@shelifts.co.uk",
+}
 
 
 def book_places(client, competition, club, places):
+    client.post("/showSummary", data={"email": CLUB_EMAILS[club]})
     return client.post(
         "/purchasePlaces",
         data={"competition": competition, "club": club, "places": places},
