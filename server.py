@@ -54,7 +54,21 @@ def purchasePlaces():
         return redirect(url_for('index'))
     competition = foundCompetition[0]
     club = foundClub[0]
-    placesRequired = int(request.form['places'])
+    bookingUrl = url_for('book', competition=competition['name'], club=club['name'])
+    try:
+        placesRequired = int(request.form['places'])
+    except (ValueError, TypeError):
+        flash("Invalid number of places")
+        return redirect(bookingUrl)
+    if placesRequired < 1:
+        flash("Invalid number of places")
+        return redirect(bookingUrl)
+    if placesRequired > 12:
+        flash("Cannot book more than 12 places")
+        return redirect(bookingUrl)
+    if placesRequired > int(competition['numberOfPlaces']):
+        flash("Not enough places available")
+        return redirect(bookingUrl)
     competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
     flash('Great-booking complete!')
     return render_template('welcome.html', club=club, competitions=competitions)
