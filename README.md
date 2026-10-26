@@ -76,6 +76,8 @@ Merci !
     [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
    
  6. Flake8 Report 
-    
 
+    See [reports/flake8.md](reports/flake8.md) — **0 errors**, all files compliant with PEP 8.
+
+    Bug fixes are documented in [reports/corrections.md](reports/corrections.md).
 
