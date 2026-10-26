@@ -72,6 +72,9 @@ def purchasePlaces():
     if alreadyBooked + placesRequired > 12:
         flash("Cannot book more than 12 places")
         return redirect(bookingUrl)
+    if int(competition['numberOfPlaces']) == 0:
+        flash("This competition is full")
+        return redirect(bookingUrl)
     if placesRequired > int(competition['numberOfPlaces']):
         flash("Not enough places available")
         return redirect(bookingUrl)
@@ -81,7 +84,7 @@ def purchasePlaces():
     competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
     club['points'] = int(club['points'])-placesRequired
     bookings[bookedKey] = alreadyBooked + placesRequired
-    flash('Great-booking complete!')
+    flash(f'Great-booking complete! {placesRequired} places booked.')
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
