@@ -1,12 +1,26 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Server error | GUDLFT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Internal error</h1>
-    <p>Something went wrong on our side. Please try again later.</p>
-    <p><a href="/">Back to the registration portal</a></p>
+    <header class="site-header">
+        <div class="brand">⛳ GUDLFT <span>Registration Portal</span></div>
+        <nav><a href="/">Home</a></nav>
+    </header>
+
+    <main class="page">
+        <section class="card error-box">
+            <p class="code">500</p>
+            <h1>Internal error</h1>
+            <p class="subtitle">Something went wrong on our side. Please try again later.</p>
+            <p><a class="btn btn-primary" href="/">Back to the registration portal</a></p>
+        </section>
+    </main>
+
+    <footer>Golf Union Discount Lift Ticket — reservations &amp; leaderboard</footer>
 </body>
 </html>

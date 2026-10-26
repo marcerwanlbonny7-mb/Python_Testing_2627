@@ -1,26 +1,46 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GUDLFT Registration</title>
+    <title>GUDLFT — Registration Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Welcome to the GUDLFT Registration Portal!</h1>
-    <p><a href="/points">View the club leaderboard</a></p>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-    {% endwith %}
-    Please enter your secretary email to continue:
-    <form action="showSummary" method="post">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id=""/>
-        <button type="submit">Enter</button>
-    </form>
+    <header class="site-header">
+        <div class="brand">⛳ GUDLFT <span>Registration Portal</span></div>
+        <nav><a href="/points">Leaderboard</a></nav>
+    </header>
+
+    <main class="page">
+        <section class="card hero">
+            <h1>Welcome!</h1>
+            <p class="subtitle">
+                Reserve places for your club in the next GUDLFT competitions.
+                Enter your secretary email to continue:
+            </p>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% endwith %}
+
+            <form class="login-form" action="showSummary" method="post">
+                <label for="email">Secretary email</label>
+                <input type="email" name="email" id="email"
+                       placeholder="you@yourclub.co" required>
+                <button class="btn btn-primary" type="submit">Enter</button>
+            </form>
+
+            <p><a class="btn btn-ghost" href="/points">View the club leaderboard</a></p>
+        </section>
+    </main>
+
+    <footer>Golf Union Discount Lift Ticket — reservations &amp; leaderboard</footer>
 </body>
 </html>

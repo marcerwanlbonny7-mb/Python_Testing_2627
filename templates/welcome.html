@@ -1,36 +1,57 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Summary | GUDLFT Registration</title>
+    <title>Summary | GUDLFT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-        <h2>Welcome, {{club['email']}} </h2><a href="{{url_for('logout')}}">Logout</a>
+    <header class="site-header">
+        <div class="brand">⛳ GUDLFT <span>Your club dashboard</span></div>
+        <nav><a class="logout" href="{{ url_for('logout') }}">Logout</a></nav>
+    </header>
 
-    {% with messages = get_flashed_messages()%}
-    {% if messages %}
-        <ul>
-       {% for message in messages %}
-            <li>{{message}}</li>
-        {% endfor %}
-       </ul>
-    {% endif%}
-    Points available: {{club['points']}}
-    <h3>Competitions:</h3>
-    <ul>
-        {% for comp in competitions%}
-        <li>
-            {{comp['name']}}<br />
-            Date: {{comp['date']}}</br>
-            Number of Places: {{comp['numberOfPlaces']}}
-            {%if comp['numberOfPlaces']|int >0%}
-            <a href="{{ url_for('book',competition=comp['name'],club=club['name']) }}">Book Places</a>
-            {%endif%}
-        </li>
-        <hr />
-        {% endfor %}
-    </ul>
-    {%endwith%}
+    <main class="page">
+        <section class="card">
+            <div class="summary-top">
+                <h2>Welcome, {{ club['email'] }}</h2>
+                <span class="badge">Points available: {{ club['points'] }}</span>
+            </div>
 
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% endwith %}
+
+            <h3>Upcoming competitions</h3>
+            <ul class="competition-list">
+                {% for comp in competitions %}
+                <li>
+                    <div>
+                        <h4>{{ comp['name'] }}</h4>
+                        <p class="meta">Date: {{ comp['date'] }}</p>
+                        <p class="meta">Number of Places: {{ comp['numberOfPlaces'] }}</p>
+                    </div>
+                    {% if comp['numberOfPlaces']|int > 0 %}
+                        <a class="btn btn-primary"
+                           href="{{ url_for('book', competition=comp['name'], club=club['name']) }}">Book Places</a>
+                    {% else %}
+                        <span class="pill pill-full">Full</span>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <p><a class="btn btn-ghost" href="/points">View the club leaderboard</a></p>
+    </main>
+
+    <footer>Golf Union Discount Lift Ticket — reservations &amp; leaderboard</footer>
 </body>
 </html>

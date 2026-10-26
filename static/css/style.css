@@ -1,0 +1,365 @@
+:root {
+    --green-900: #14532d;
+    --green-800: #166534;
+    --green-700: #1a7f4b;
+    --gold: #c9a227;
+    --bg: #f3f6f4;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --danger: #b91c1c;
+    --ok: #15803d;
+    --radius: 16px;
+    --shadow: 0 10px 30px rgba(20, 83, 45, 0.10);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background:
+        radial-gradient(1200px 400px at 50% -100px, #e3efe8 0%, transparent 70%),
+        var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--green-700);
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 28px;
+    background: linear-gradient(135deg, var(--green-900), var(--green-700));
+    color: #fff;
+    box-shadow: var(--shadow);
+}
+
+.brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+
+.brand span {
+    font-weight: 400;
+    opacity: 0.8;
+    font-size: 0.95rem;
+    margin-left: 8px;
+}
+
+.site-header a {
+    color: #fff;
+    text-decoration: none;
+    padding: 9px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 999px;
+    font-size: 0.95rem;
+    transition: background 0.15s ease;
+}
+
+.site-header a:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+/* ---------- Layout ---------- */
+
+main.page {
+    width: 100%;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 36px 20px 24px;
+    flex: 1;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid #e7ece9;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 30px 32px;
+    margin-bottom: 24px;
+}
+
+.hero h1 {
+    margin-top: 0;
+    font-size: 2rem;
+    color: var(--green-900);
+}
+
+.subtitle,
+.card > p {
+    color: var(--muted);
+    margin-top: 0;
+}
+
+/* ---------- Flash messages ---------- */
+
+.flash {
+    list-style: none;
+    margin: 18px 0;
+    padding: 0;
+}
+
+.flash li {
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    border-left: 5px solid var(--gold);
+    color: #7c2d12;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+/* ---------- Forms & buttons ---------- */
+
+form.login-form,
+form.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 420px;
+    margin-top: 22px;
+}
+
+label {
+    font-weight: 600;
+    color: var(--green-900);
+}
+
+input[type="email"],
+input[type="number"] {
+    width: 100%;
+    padding: 13px 15px;
+    font-size: 1rem;
+    border: 1.5px solid #d1d9d5;
+    border-radius: 10px;
+    background: #fbfcfb;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="email"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: var(--green-700);
+    box-shadow: 0 0 0 3px rgba(26, 127, 75, 0.18);
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--green-800), var(--green-700));
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(26, 127, 75, 0.35);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--green-800);
+    border: 1.5px solid var(--green-700);
+}
+
+/* ---------- Welcome / summary ---------- */
+
+.summary-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.summary-top h2 {
+    margin: 0;
+    color: var(--green-900);
+    font-size: 1.4rem;
+    word-break: break-all;
+}
+
+.badge {
+    display: inline-block;
+    background: var(--green-900);
+    color: #fff;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+}
+
+.logout {
+    color: var(--danger) !important;
+    border-color: var(--danger) !important;
+}
+
+.competition-list {
+    list-style: none;
+    padding: 0;
+    margin: 22px 0 0;
+    display: grid;
+    gap: 14px;
+}
+
+.competition-list li {
+    border: 1px solid #e7ece9;
+    border-radius: 12px;
+    padding: 16px 18px;
+    background: #fbfcfb;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.competition-list h4 {
+    margin: 0 0 4px;
+    font-size: 1.1rem;
+    color: var(--green-900);
+}
+
+.competition-list .meta {
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin: 0;
+}
+
+.pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.pill-open {
+    background: #dcfce7;
+    color: var(--ok);
+}
+
+.pill-full {
+    background: #fee2e2;
+    color: var(--danger);
+}
+
+/* ---------- Leaderboard ---------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 14px 16px;
+    border-bottom: 1px solid #e7ece9;
+}
+
+th {
+    background: var(--green-900);
+    color: #fff;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+th:first-child {
+    border-radius: 10px 0 0 0;
+}
+
+th:last-child {
+    border-radius: 0 10px 0 0;
+}
+
+tbody tr:hover {
+    background: #f0f7f3;
+}
+
+td.rank {
+    font-weight: 800;
+    color: var(--gold);
+    width: 70px;
+}
+
+td.points {
+    font-weight: 800;
+    color: var(--green-800);
+}
+
+/* ---------- Error pages ---------- */
+
+.error-box {
+    text-align: center;
+    padding: 60px 30px;
+}
+
+.error-box .code {
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--green-700);
+    margin: 0;
+    line-height: 1;
+}
+
+.error-box h1 {
+    color: var(--green-900);
+    margin: 10px 0 6px;
+}
+
+/* ---------- Footer ---------- */
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.88rem;
+    padding: 20px;
+    border-top: 1px solid #e2e8e4;
+    background: #fff;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+    .site-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .card {
+        padding: 22px 18px;
+    }
+
+    .summary-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
