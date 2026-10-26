@@ -71,3 +71,37 @@ class TestPlaceValidation:
 
         assert b"Not enough places available" in response.data
         assert places_available(client, FULL_COMPETITION, VALID_CLUB) == 5
+
+
+class TestCumulativeTwelveLimit:
+    def test_two_bookings_cannot_exceed_12_in_total(self, client):
+        book_places(client, VALID_COMPETITION, VALID_CLUB, "8")
+
+        response = book_places(client, VALID_COMPETITION, VALID_CLUB, "8")
+
+        assert b"Cannot book more than 12 places" in response.data
+
+    def test_bookings_up_to_exactly_12_are_accepted(self, client):
+        book_places(client, VALID_COMPETITION, VALID_CLUB, "8")
+
+        response = book_places(client, VALID_COMPETITION, VALID_CLUB, "4")
+
+        assert b"booking complete" in response.data
+        assert places_available(client, VALID_COMPETITION, VALID_CLUB) == 13
+
+    def test_booking_beyond_cumulative_12_is_rejected(self, client):
+        book_places(client, VALID_COMPETITION, VALID_CLUB, "8")
+        book_places(client, VALID_COMPETITION, VALID_CLUB, "4")
+
+        response = book_places(client, VALID_COMPETITION, VALID_CLUB, "1")
+
+        assert b"Cannot book more than 12 places" in response.data
+        assert places_available(client, VALID_COMPETITION, VALID_CLUB) == 13
+
+    def test_limit_is_per_competition_not_global(self, client):
+        book_places(client, VALID_COMPETITION, VALID_CLUB, "12")
+
+        response = book_places(client, FULL_COMPETITION, VALID_CLUB, "1")
+
+        assert b"booking complete" in response.data
+        assert places_available(client, FULL_COMPETITION, VALID_CLUB) == 12

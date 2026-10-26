@@ -2,7 +2,7 @@ import copy
 
 import pytest
 
-from server import app, clubs, competitions
+from server import app, bookings, clubs, competitions
 
 
 @pytest.fixture
@@ -16,8 +16,11 @@ def client():
 def reset_data():
     clubs_snapshot = copy.deepcopy(clubs)
     competitions_snapshot = copy.deepcopy(competitions)
+    bookings_snapshot = bookings.copy()
     yield
     clubs.clear()
     clubs.extend(clubs_snapshot)
     competitions.clear()
     competitions.extend(competitions_snapshot)
+    bookings.clear()
+    bookings.update(bookings_snapshot)
