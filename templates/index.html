@@ -4,21 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GUDLFT — Registration Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <div class="bg-orb bg-orb--purple" aria-hidden="true"></div>
+    <div class="bg-orb bg-orb--blue" aria-hidden="true"></div>
+
     <header class="site-header">
-        <div class="brand">⛳ GUDLFT <span>Registration Portal</span></div>
-        <nav><a href="/points">Leaderboard</a></nav>
+        <a class="brand" href="/">
+            <span class="brand-mark" aria-hidden="true">⛳</span>
+            GUDLFT <span class="brand-sub">Registration Portal</span>
+        </a>
+        <nav class="nav-actions">
+            <a class="nav-link" href="/points">Leaderboard</a>
+        </nav>
     </header>
 
     <main class="page">
-        <section class="card hero">
-            <h1>Welcome!</h1>
-            <p class="subtitle">
-                Reserve places for your club in the next GUDLFT competitions.
-                Enter your secretary email to continue:
-            </p>
+        <section class="card card-hero">
+            <span class="section-kicker">Golf Union · Division reservations</span>
+            <h1>Welcome to GUDLFT</h1>
+            <p class="subtitle">Your golf journey starts here.</p>
 
             {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -30,17 +39,21 @@
             {% endif %}
             {% endwith %}
 
-            <form class="login-form" action="showSummary" method="post">
-                <label for="email">Secretary email</label>
-                <input type="email" name="email" id="email"
-                       placeholder="you@yourclub.co" required>
-                <button class="btn btn-primary" type="submit">Enter</button>
+            <form class="login-form form-field" action="showSummary" method="post">
+                <div class="form-field">
+                    <label for="email">Secretary email</label>
+                    <input type="email" name="email" id="email"
+                           placeholder="you@yourclub.co" required>
+                </div>
+                <button class="btn btn-primary" type="submit">Access your club</button>
             </form>
 
-            <p><a class="btn btn-ghost" href="/points">View the club leaderboard</a></p>
+            <p style="margin-top: 26px;">
+                <a class="btn btn-ghost" href="/points">View the club leaderboard</a>
+            </p>
         </section>
     </main>
 
-    <footer>Golf Union Discount Lift Ticket — reservations &amp; leaderboard</footer>
+    <footer>© 2026 GUDLFT — Golf Union Discount Lift Ticket · reservations &amp; leaderboard</footer>
 </body>
 </html>

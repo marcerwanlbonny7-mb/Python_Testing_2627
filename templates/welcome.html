@@ -3,20 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Summary | GUDLFT</title>
+    <title>Dashboard | GUDLFT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <div class="bg-orb bg-orb--purple" aria-hidden="true"></div>
+    <div class="bg-orb bg-orb--blue" aria-hidden="true"></div>
+
     <header class="site-header">
-        <div class="brand">⛳ GUDLFT <span>Your club dashboard</span></div>
-        <nav><a class="logout" href="{{ url_for('logout') }}">Logout</a></nav>
+        <a class="brand" href="/">
+            <span class="brand-mark" aria-hidden="true">⛳</span>
+            GUDLFT <span class="brand-sub">Club dashboard</span>
+        </a>
+        <nav class="nav-actions">
+            <span class="nav-club">{{ club['email'] }}</span>
+            <a class="nav-link" href="/points">Leaderboard</a>
+            <a class="nav-link nav-link--danger" href="{{ url_for('logout') }}">Logout</a>
+        </nav>
     </header>
 
     <main class="page">
         <section class="card">
-            <div class="summary-top">
-                <h2>Welcome, {{ club['email'] }}</h2>
-                <span class="badge">Points available: {{ club['points'] }}</span>
+            <div class="dash-head">
+                <div>
+                    <span class="section-kicker">Dashboard</span>
+                    <h1>Welcome back!</h1>
+                    <p class="subtitle">Discover your next golf competition.</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" aria-hidden="true">🏆</div>
+                    <div>
+                        <div class="stat-label">Points available: {{ club['points'] }}</div>
+                        <div class="stat-value">{{ club['points'] }}<small>points</small></div>
+                    </div>
+                </div>
             </div>
 
             {% with messages = get_flashed_messages() %}
@@ -30,28 +53,32 @@
             {% endwith %}
 
             <h3>Upcoming competitions</h3>
-            <ul class="competition-list">
+            <div class="competition-grid">
                 {% for comp in competitions %}
-                <li>
-                    <div>
-                        <h4>{{ comp['name'] }}</h4>
-                        <p class="meta">Date: {{ comp['date'] }}</p>
-                        <p class="meta">Number of Places: {{ comp['numberOfPlaces'] }}</p>
+                <article class="comp-card">
+                    <div class="comp-icon" aria-hidden="true">🏌️</div>
+                    <h4>{{ comp['name'] }}</h4>
+                    <div class="comp-meta">
+                        <span>Date: {{ comp['date'] }}</span>
+                        <span>Number of Places: {{ comp['numberOfPlaces'] }}</span>
                     </div>
-                    {% if comp['numberOfPlaces']|int > 0 %}
-                        <a class="btn btn-primary"
-                           href="{{ url_for('book', competition=comp['name'], club=club['name']) }}">Book Places</a>
-                    {% else %}
-                        <span class="pill pill-full">Full</span>
-                    {% endif %}
-                </li>
+                    <div class="comp-footer">
+                        {% if comp['numberOfPlaces']|int > 0 %}
+                            <span class="pill pill-open">Open</span>
+                            <a class="btn btn-accent"
+                               href="{{ url_for('book', competition=comp['name'], club=club['name']) }}">Book Places</a>
+                        {% else %}
+                            <span class="pill pill-full">Full</span>
+                        {% endif %}
+                    </div>
+                </article>
                 {% endfor %}
-            </ul>
+            </div>
         </section>
 
         <p><a class="btn btn-ghost" href="/points">View the club leaderboard</a></p>
     </main>
 
-    <footer>Golf Union Discount Lift Ticket — reservations &amp; leaderboard</footer>
+    <footer>© 2026 GUDLFT — Golf Union Discount Lift Ticket · reservations &amp; leaderboard</footer>
 </body>
 </html>
