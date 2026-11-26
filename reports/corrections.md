@@ -20,6 +20,9 @@ Les dates et heures ci-dessous sont celles des pushes réels.
 | 2026-10-26 18:53:32 | `bug/session-club` | `10aca08` | Réservation possible sans connexion, et au nom d'un autre club |
 | 2026-10-26 19:02:42 | `bug/gestion-erreurs` | `e558f97` | Erreurs brutales (404/500, champs manquants, JSON cassé) |
 | 2026-10-26 19:04:27 | `feature/points-board` | `594eaf3` | Nouveauté : tableau public des points sur `/points` |
+| 2026-11-19 12:23:00 | `amelioration/dark-glass-ui` | `a42f3b4` | Refonte UI sombre glassmorphism (PR 20) |
+| 2026-11-26 08:22:00 | `bug/donnees-persistantes` | `ecb1995` | Réservations non sauvegardées dans les fichiers JSON |
+| 2026-11-26 08:24:00 | `bug/secret-key-env` | `7d799c0` | Clé secrète codée en dur |
 
 ---
 
@@ -199,6 +202,37 @@ ordre décroissant, méthode POST refusée, lien depuis l'accueil).
 
 ---
 
+### 13. Réservations non sauvegardées — `bug/donnees-persistantes`
+
+**Le problème :** après une réservation, les nouveaux points, places et le
+compteur cumulé (limite de 12) n'étaient écrits **que en mémoire** : un
+redémarrage du serveur effaçait tout.
+
+**La correction :** nouvelles fonctions `saveClubs()`,
+`saveCompetitions()` et `saveBookings()` appelées à chaque achat réussi ;
+`bookings` est rechargé au démarrage depuis `bookings.json` (ignoré par
+git). Le fixture de test sauvegarde et restaure les fichiers JSON pour
+qu'aucun test ne touche aux vraies données.
+
+**Tests :** 8 tests (5 unitaires roundtrip sur `tmp_path` + 3
+intégration vérifiant points/places/compteur écrits sur disque).
+
+---
+
+### 14. Clé secrète codée en dur — `bug/secret-key-env`
+
+**Le problème :** `app.secret_key` contenait la valeur littérale
+`'something_special'` dans le code source (fuite si le dépôt est public).
+
+**La correction :** `app.secret_key = os.environ.get('SECRET_KEY') or
+'something_special'` — variable d'environnement prioritaire, valeur par
+défaut conservée pour le fonctionnement local sans configuration.
+
+**Tests :** 2 tests (clé configurée et non vide ; valeur = env ou
+fallback).
+
+---
+
 ## Évolution du nombre de tests
 
 | Étape | Tests |
@@ -214,3 +248,6 @@ ordre décroissant, méthode POST refusée, lien depuis l'accueil).
 | Après correction 10 (session) | 48 |
 | Après correction 11 (erreurs) | 59 |
 | Après nouveauté `/points` | 65 |
+| Après restructuration unit/integration/functional | 71 |
+| Après correction 13 (persistance) | 79 |
+| Après correction 14 (secret key) | **81** |
