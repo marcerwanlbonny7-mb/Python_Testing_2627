@@ -1,6 +1,6 @@
 # Rapport de test
 
-Exécution du **2026-10-26** sur le dépôt `main`.
+Exécution du **2026-11-26** sur le dépôt `main`.
 
 ## Comment lancer les tests
 
@@ -16,21 +16,23 @@ python -m flake8 server.py conftest.py tests/
 
 | Indicateur | Résultat | Exigence |
 |------------|----------|----------|
-| Tests exécutés | **71 — tous verts** | — |
-| Couverture `server.py` | **100 %** (124 instructions, 0 manquantes) | ≥ 60 % |
+| Tests exécutés | **81 — tous verts** | — |
+| Couverture `server.py` | **100 %** (153 instructions, 0 manquantes) | ≥ 60 % |
 | Erreurs flake8 | **0** | 0 (norme PEP 8) |
 
 ## Structure des tests
 
 Les tests sont regroupés en trois dossiers séparés comme demandé :
 
-### `tests/unit/` — logique pure, sans serveur (6 tests)
+### `tests/unit/` — logique pure, sans serveur (13 tests)
 
 | Fichier | Ce qu'il vérifie |
 |---------|------------------|
 | `test_data_loading.py` | Chargement de `clubs.json` / `competitions.json` : fichier absent, corrompu, clé manquante → message d'erreur clair |
+| `test_saving.py` | Sauvegarde roundtrip de clubs, compétitions et bookings ; `bookings.json` absent → `{}` ; fichier corrompu → message clair |
+| `test_app_config.py` | `secret_key` configurée (variable d'env `SECRET_KEY` ou fallback) |
 
-### `tests/integration/` — routes et interactions (61 tests)
+### `tests/integration/` — routes et interactions (64 tests)
 
 | Fichier | Ce qu'il vérifie |
 |---------|------------------|
@@ -44,6 +46,7 @@ Les tests sont regroupés en trois dossiers séparés comme demandé :
 | `test_spec_messages.py` | Messages conformes aux spécifications |
 | `test_past_competitions.py` | Compétitions passées : masquées et bloquées |
 | `test_error_pages.py` | Pages 404/500 personnalisées, champs de formulaire manquants |
+| `test_persistence.py` | Après achat : points, places et compteur écrits sur disque |
 
 ### `tests/functional/` — scénarios bout-en-bout (4 tests)
 
@@ -64,4 +67,6 @@ Les tests sont regroupés en trois dossiers séparés comme demandé :
 | Après session/connexion | 48 |
 | Après gestion des erreurs | 59 |
 | Après classement `/points` | 65 |
-| Après restructuration unit/integration/functional | **71** |
+| Après restructuration unit/integration/functional | 71 |
+| Après persistance JSON | 79 |
+| Après secret key env | **81** |

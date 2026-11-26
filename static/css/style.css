@@ -1,0 +1,834 @@
+/* ============================================================
+   1. GOOGLE FONTS / BASE TYPOGRAPHY
+   Outfit est chargé via <link> dans chaque template.
+   ============================================================ */
+
+body {
+    font-family: "Outfit", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.1px;
+}
+
+h1, h2, h3, h4 {
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    line-height: 1.2;
+}
+
+h1 { font-size: clamp(1.9rem, 3.5vw, 2.7rem); }
+h2 { font-size: clamp(1.35rem, 2.4vw, 1.75rem); }
+h3 { font-size: clamp(1.1rem, 2vw, 1.35rem); }
+
+p { line-height: 1.7; }
+
+/* ============================================================
+   2. VARIABLES CSS — Dark Premium
+   ============================================================ */
+
+:root {
+    --bg-primary: #090b1a;
+    --bg-secondary: #11152d;
+    --purple-primary: #8b5cf6;
+    --purple-secondary: #a78bfa;
+    --blue-primary: #3b82f6;
+    --green-accent: #84cc16;
+    --text-primary: #f8fafc;
+    --text-secondary: #a5b4cc;
+    --glass-bg: rgba(255, 255, 255, 0.07);
+    --glass-bg-strong: rgba(255, 255, 255, 0.11);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --gold: #fbbf24;
+    --silver: #cbd5e1;
+    --bronze: #f59e0b;
+    --radius: 20px;
+    --radius-sm: 12px;
+    --shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+    --glow-purple: 0 0 0 1px rgba(139, 92, 246, 0.35),
+                   0 10px 30px rgba(139, 92, 246, 0.25);
+}
+
+/* ============================================================
+   3. RESET GLOBAL
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+a { color: var(--purple-secondary); }
+
+img, svg { max-width: 100%; }
+
+ul { list-style: none; }
+
+/* ============================================================
+   4. BACKGROUND — dégradé violet/bleu + éléments décoratifs
+   ============================================================ */
+
+body {
+    background:
+        radial-gradient(1100px 620px at 12% -12%, rgba(139, 92, 246, 0.28) 0%, transparent 60%),
+        radial-gradient(900px 560px at 100% 0%, rgba(59, 130, 246, 0.22) 0%, transparent 55%),
+        radial-gradient(700px 500px at 50% 115%, rgba(139, 92, 246, 0.16) 0%, transparent 60%),
+        linear-gradient(160deg, var(--bg-primary) 0%, var(--bg-secondary) 55%, #0b0f24 100%);
+    background-attachment: fixed;
+}
+
+.bg-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.45;
+    pointer-events: none;
+    z-index: 0;
+    animation: float 14s ease-in-out infinite;
+}
+
+.bg-orb--purple {
+    width: 380px;
+    height: 380px;
+    top: -110px;
+    left: -90px;
+    background: rgba(139, 92, 246, 0.55);
+}
+
+.bg-orb--blue {
+    width: 320px;
+    height: 320px;
+    right: -80px;
+    bottom: -60px;
+    background: rgba(59, 130, 246, 0.5);
+    animation-delay: -7s;
+}
+
+/* ============================================================
+   5. NAVIGATION
+   ============================================================ */
+
+.site-header {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 18px clamp(20px, 4vw, 44px);
+    background: rgba(9, 11, 26, 0.55);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.brand-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--purple-primary), var(--blue-primary));
+    font-size: 1.05rem;
+    box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+}
+
+.brand-sub {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-left: 4px;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.nav-club {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: var(--glass-bg);
+    word-break: break-all;
+}
+
+.nav-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 10px 20px;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: var(--glass-bg);
+    transition: transform 0.18s ease, background 0.18s ease,
+                border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.nav-link:hover {
+    background: rgba(139, 92, 246, 0.22);
+    border-color: rgba(139, 92, 246, 0.55);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(139, 92, 246, 0.28);
+}
+
+.nav-link:focus-visible,
+.btn:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--purple-secondary);
+    outline-offset: 3px;
+}
+
+.nav-link--danger {
+    color: #fda4af;
+    border-color: rgba(251, 113, 133, 0.4);
+}
+
+.nav-link--danger:hover {
+    background: rgba(251, 113, 133, 0.16);
+    border-color: rgba(251, 113, 133, 0.65);
+    box-shadow: 0 8px 22px rgba(251, 113, 133, 0.22);
+}
+
+/* ============================================================
+   6. BOUTONS
+   ============================================================ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 13px 28px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.22s ease,
+                background 0.22s ease, border-color 0.22s ease,
+                filter 0.22s ease;
+}
+
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+    color: #fff;
+    background: linear-gradient(120deg, var(--purple-primary) 0%, var(--blue-primary) 100%);
+    background-size: 160% 160%;
+    box-shadow: 0 10px 26px rgba(139, 92, 246, 0.4);
+}
+
+.btn-primary:hover {
+    background-position: 85% 50%;
+    box-shadow: 0 14px 34px rgba(139, 92, 246, 0.55);
+    animation: pulseGlow 1.6s ease-in-out infinite;
+}
+
+.btn-ghost {
+    color: var(--text-primary);
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.13);
+    border-color: rgba(167, 139, 250, 0.55);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+}
+
+.btn-accent {
+    color: #0a1305;
+    background: linear-gradient(120deg, var(--green-accent), #a3e635);
+    box-shadow: 0 10px 26px rgba(132, 204, 22, 0.32);
+}
+
+.btn-accent:hover {
+    box-shadow: 0 14px 32px rgba(132, 204, 22, 0.48);
+    filter: brightness(1.06);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ============================================================
+   7. FORMULAIRES
+   ============================================================ */
+
+input[type="email"],
+input[type="number"],
+input[type="text"] {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 18px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-primary);
+    background: rgba(9, 11, 26, 0.55);
+    border: 1.5px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease,
+                background 0.18s ease;
+}
+
+input::placeholder { color: rgba(165, 180, 204, 0.6); }
+
+input:hover { border-color: rgba(167, 139, 250, 0.45); }
+
+input:focus {
+    outline: none;
+    border-color: var(--purple-primary);
+    background: rgba(9, 11, 26, 0.78);
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.22);
+}
+
+label {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.form-field { display: flex; flex-direction: column; gap: 9px; }
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+/* ============================================================
+   8. CARTES GLASSMORPHISM
+   ============================================================ */
+
+main.page {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: clamp(26px, 5vw, 52px) clamp(16px, 4vw, 32px) 32px;
+    flex: 1;
+}
+
+.card {
+    position: relative;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    box-shadow: var(--shadow);
+    padding: clamp(24px, 4vw, 40px);
+    margin-bottom: 26px;
+    overflow: hidden;
+    animation: fadeIn 0.55s ease both, slideUp 0.55s ease both;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+}
+
+.card-hero { text-align: center; }
+
+.card-hero h1 {
+    background: linear-gradient(100deg, #fff 15%, var(--purple-secondary) 65%, var(--blue-primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    max-width: 560px;
+}
+
+.card-hero .subtitle { margin: 0 auto; }
+
+.section-kicker {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: var(--purple-secondary);
+    margin-bottom: 12px;
+}
+
+/* Flash messages */
+
+.flash {
+    display: grid;
+    gap: 10px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.flash li {
+    padding: 14px 18px;
+    font-weight: 500;
+    font-size: 0.97rem;
+    color: #fde68a;
+    background: rgba(251, 191, 36, 0.12);
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-sm);
+    animation: slideUp 0.4s ease both;
+}
+
+/* Badges & pills */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: #ecfccb;
+    background: rgba(132, 204, 22, 0.16);
+    border: 1px solid rgba(132, 204, 22, 0.45);
+    border-radius: 999px;
+}
+
+.pill {
+    display: inline-block;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 999px;
+}
+
+.pill-open {
+    color: #ecfccb;
+    background: rgba(132, 204, 22, 0.16);
+    border: 1px solid rgba(132, 204, 22, 0.45);
+}
+
+.pill-full {
+    color: #fecdd3;
+    background: rgba(251, 113, 133, 0.14);
+    border: 1px solid rgba(251, 113, 133, 0.42);
+}
+
+/* Footer */
+
+footer {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 22px 18px;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--glass-border);
+    background: rgba(9, 11, 26, 0.5);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+/* ============================================================
+   9. DASHBOARD (welcome.html)
+   ============================================================ */
+
+.dash-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 26px;
+}
+
+.dash-head h1 { margin-bottom: 6px; }
+.dash-head .subtitle { margin: 0; }
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-width: min(100%, 300px);
+    padding: 22px 26px;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.24), rgba(59, 130, 246, 0.16));
+    border: 1px solid rgba(167, 139, 250, 0.42);
+    border-radius: var(--radius);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 16px 40px rgba(139, 92, 246, 0.24);
+    animation: pulseGlow 3.5s ease-in-out infinite;
+}
+
+.stat-icon {
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    flex: 0 0 auto;
+    border-radius: 16px;
+    font-size: 1.5rem;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.stat-value {
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.15;
+}
+
+.stat-value small {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-left: 6px;
+}
+
+/* ============================================================
+   10. GRILLE DE COMPÉTITIONS
+   ============================================================ */
+
+.competition-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-top: 22px;
+}
+
+.comp-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 26px 24px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+    transition: transform 0.22s ease, border-color 0.22s ease,
+                box-shadow 0.22s ease;
+    animation: fadeIn 0.5s ease both, slideUp 0.5s ease both;
+}
+
+.comp-card:nth-child(2) { animation-delay: 0.09s; }
+.comp-card:nth-child(3) { animation-delay: 0.18s; }
+.comp-card:nth-child(4) { animation-delay: 0.27s; }
+
+.comp-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(167, 139, 250, 0.5);
+    box-shadow: 0 22px 46px rgba(139, 92, 246, 0.3);
+}
+
+.comp-icon {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    font-size: 1.25rem;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(59, 130, 246, 0.3));
+    border: 1px solid rgba(167, 139, 250, 0.4);
+}
+
+.comp-card h4 {
+    font-size: 1.22rem;
+    color: var(--text-primary);
+}
+
+.comp-meta {
+    display: grid;
+    gap: 7px;
+    font-size: 0.93rem;
+    color: var(--text-secondary);
+}
+
+.comp-meta strong { color: var(--text-primary); font-weight: 600; }
+
+.comp-footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* ============================================================
+   11. CLASSEMENT DES POINTS (points.html)
+   ============================================================ */
+
+.ranking-wrap { overflow-x: auto; }
+
+table.ranking {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-top: 18px;
+}
+
+.ranking thead th {
+    padding: 14px 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-align: left;
+    background: transparent;
+    border: none;
+}
+
+.ranking tbody td {
+    padding: 18px 20px;
+    background: var(--glass-bg);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: background 0.18s ease;
+}
+
+.ranking tbody td:first-child {
+    border-left: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.ranking tbody td:last-child {
+    border-right: 1px solid var(--glass-border);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.ranking tbody tr:hover td {
+    background: rgba(139, 92, 246, 0.14);
+}
+
+.rank-cell {
+    display: inline-grid;
+    place-items: center;
+    min-width: 42px;
+    height: 42px;
+    padding: 0 8px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 1.02rem;
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid var(--glass-border);
+}
+
+tr.rank-1 .rank-cell {
+    color: #422006;
+    background: linear-gradient(135deg, #fde68a, var(--gold));
+    border-color: rgba(251, 191, 36, 0.7);
+    box-shadow: 0 6px 18px rgba(251, 191, 36, 0.35);
+}
+
+tr.rank-2 .rank-cell {
+    color: #1e293b;
+    background: linear-gradient(135deg, #f1f5f9, var(--silver));
+    border-color: rgba(203, 213, 225, 0.7);
+    box-shadow: 0 6px 18px rgba(203, 213, 225, 0.28);
+}
+
+tr.rank-3 .rank-cell {
+    color: #451a03;
+    background: linear-gradient(135deg, #fed7aa, var(--bronze));
+    border-color: rgba(245, 158, 11, 0.7);
+    box-shadow: 0 6px 18px rgba(245, 158, 11, 0.3);
+}
+
+.club-cell {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.club-avatar {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--purple-primary), var(--blue-primary));
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.points-cell {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--green-accent);
+}
+
+.trophy { margin-left: 6px; }
+
+/* ============================================================
+   12. PAGES D'ERREUR
+   ============================================================ */
+
+.error-box {
+    text-align: center;
+    padding: clamp(44px, 8vw, 80px) clamp(20px, 5vw, 44px);
+    animation: fadeIn 0.5s ease both, slideUp 0.5s ease both;
+}
+
+.error-code {
+    font-size: clamp(5rem, 14vw, 9rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -6px;
+    background: linear-gradient(140deg, var(--purple-secondary) 10%, var(--blue-primary) 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 12px 30px rgba(139, 92, 246, 0.4));
+    margin-bottom: 8px;
+}
+
+.error-box h1 { margin-bottom: 8px; }
+.error-box .subtitle { margin: 0 auto 28px; }
+
+.error-icon {
+    display: grid;
+    place-items: center;
+    width: 74px;
+    height: 74px;
+    margin: 0 auto 20px;
+    border-radius: 22px;
+    font-size: 2rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    animation: float 5s ease-in-out infinite;
+}
+
+/* ============================================================
+   13. ANIMATIONS
+   ============================================================ */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-16px); }
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 10px 26px rgba(139, 92, 246, 0.4); }
+    50% { box-shadow: 0 14px 38px rgba(139, 92, 246, 0.62); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================================
+   14. RESPONSIVE DESIGN
+   1920 / 1366 / 768 / 375 / 320
+   ============================================================ */
+
+@media (max-width: 1024px) {
+    .competition-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .site-header { justify-content: center; text-align: center; }
+    .nav-actions { justify-content: center; }
+    .dash-head { flex-direction: column; align-items: stretch; }
+    .stat-card { min-width: 0; }
+    .competition-grid { grid-template-columns: 1fr; }
+    .form-row { flex-direction: column; align-items: stretch; }
+    .btn { width: 100%; }
+    .nav-link, .btn { min-height: 48px; }
+}
+
+@media (max-width: 420px) {
+    .brand { font-size: 1.12rem; }
+    .brand-sub { display: none; }
+    .card { padding: 22px 16px; border-radius: 16px; }
+    .error-code { letter-spacing: -3px; }
+    .ranking thead th,
+    .ranking tbody td { padding: 13px 12px; }
+    .club-cell { font-size: 0.97rem; }
+    .nav-club { font-size: 0.84rem; }
+}

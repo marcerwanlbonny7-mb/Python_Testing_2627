@@ -1,12 +1,38 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Server error | GUDLFT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Internal error</h1>
-    <p>Something went wrong on our side. Please try again later.</p>
-    <p><a href="/">Back to the registration portal</a></p>
+    <div class="bg-orb bg-orb--purple" aria-hidden="true"></div>
+    <div class="bg-orb bg-orb--blue" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <a class="brand" href="/">
+            <span class="brand-mark" aria-hidden="true">⛳</span>
+            GUDLFT <span class="brand-sub">Registration Portal</span>
+        </a>
+        <nav class="nav-actions">
+            <a class="nav-link" href="/">Home</a>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="card error-box">
+            <div class="error-icon" aria-hidden="true">🛠️</div>
+            <p class="error-code">500</p>
+            <h1>Internal error</h1>
+            <p class="subtitle">Something went wrong on our side. Please try again later.</p>
+            <a class="btn btn-primary" href="/">Back to the registration portal</a>
+        </section>
+    </main>
+
+    <footer>© 2026 GUDLFT — Golf Union Discount Lift Ticket · reservations &amp; leaderboard</footer>
 </body>
 </html>

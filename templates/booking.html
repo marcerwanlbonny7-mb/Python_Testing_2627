@@ -1,26 +1,64 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking for {{competition['name']}} || GUDLFT</title>
+    <title>Booking for {{ competition['name'] }} | GUDLFT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h2>{{competition['name']}}</h2>
-    Places available: {{competition['numberOfPlaces']}}
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-    {% endwith %}
-    <form action="/purchasePlaces" method="post">
-        <input type="hidden" name="club" value="{{club['name']}}">
-        <input type="hidden" name="competition" value="{{competition['name']}}">
-        <label for="places">How many places?</label><input type="number" name="places" min="1" max="12" required id=""/>
-        <button type="submit">Book</button>
-    </form>
+    <div class="bg-orb bg-orb--purple" aria-hidden="true"></div>
+    <div class="bg-orb bg-orb--blue" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <a class="brand" href="/">
+            <span class="brand-mark" aria-hidden="true">⛳</span>
+            GUDLFT <span class="brand-sub">Reservations</span>
+        </a>
+        <nav class="nav-actions">
+            <a class="nav-link" href="/">Home</a>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="card" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+            <span class="section-kicker">Booking</span>
+            <h1>Book Your Competition</h1>
+            <p class="subtitle">
+                <strong style="color: var(--text-primary);">{{ competition['name'] }}</strong><br>
+                Places available: {{ competition['numberOfPlaces'] }}
+                &nbsp;·&nbsp; 1 place = 1 point
+            </p>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% endwith %}
+
+            <form class="booking-form" action="/purchasePlaces" method="post">
+                <input type="hidden" name="club" value="{{ club['name'] }}">
+                <input type="hidden" name="competition" value="{{ competition['name'] }}">
+                <div class="form-field">
+                    <label for="places">How many places?</label>
+                    <input type="number" name="places" id="places" min="1" max="12" required>
+                </div>
+                <button class="btn btn-primary" type="submit">Book</button>
+            </form>
+
+            <p style="margin-top: 26px;">
+                <a class="btn btn-ghost" href="/">Back to the registration portal</a>
+            </p>
+        </section>
+    </main>
+
+    <footer>© 2026 GUDLFT — Golf Union Discount Lift Ticket · reservations &amp; leaderboard</footer>
 </body>
 </html>
