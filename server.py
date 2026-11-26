@@ -35,6 +35,44 @@ def loadCompetitions():
         )
 
 
+def loadBookings():
+    try:
+        with open('bookings.json') as f:
+            nested = json.load(f)
+    except FileNotFoundError:
+        return {}
+    except json.JSONDecodeError:
+        raise SystemExit("ERROR: bookings.json is not valid JSON.")
+    flat = {}
+    for clubName, comps in nested.items():
+        for compName, count in comps.items():
+            flat[(clubName, compName)] = count
+    return flat
+
+
+def saveClubs(clubs_data):
+    with open('clubs.json', 'w') as c:
+        json.dump(
+            {'clubs': clubs_data}, c, indent=4, ensure_ascii=False
+        )
+
+
+def saveCompetitions(competitions_data):
+    with open('competitions.json', 'w') as f:
+        json.dump(
+            {'competitions': competitions_data}, f,
+            indent=4, ensure_ascii=False
+        )
+
+
+def saveBookings(bookings_data):
+    nested = {}
+    for (clubName, compName), count in bookings_data.items():
+        nested.setdefault(clubName, {})[compName] = count
+    with open('bookings.json', 'w') as f:
+        json.dump(nested, f, indent=4, ensure_ascii=False)
+
+
 def isUpcoming(competition):
     compDate = datetime.strptime(competition['date'], '%Y-%m-%d %H:%M:%S')
     return compDate >= datetime.now()
@@ -45,7 +83,7 @@ app.secret_key = 'something_special'
 
 competitions = loadCompetitions()
 clubs = loadClubs()
-bookings = {}
+bookings = loadBookings()
 
 
 @app.route('/')
@@ -163,6 +201,9 @@ def purchasePlaces():
     )
     club['points'] = int(club['points']) - placesRequired
     bookings[bookedKey] = alreadyBooked + placesRequired
+    saveClubs(clubs)
+    saveCompetitions(competitions)
+    saveBookings(bookings)
     flash(f'Great-booking complete! {placesRequired} places booked.')
     return render_template(
         'welcome.html', club=club, competitions=competitions
