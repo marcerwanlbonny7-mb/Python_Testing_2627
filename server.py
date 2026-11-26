@@ -1,4 +1,5 @@
 import json
+import os
 from datetime import datetime
 from flask import (
     Flask, render_template, request, redirect, flash, url_for, session
@@ -79,7 +80,7 @@ def isUpcoming(competition):
 
 
 app = Flask(__name__)
-app.secret_key = 'something_special'
+app.secret_key = os.environ.get('SECRET_KEY') or 'something_special'
 
 competitions = loadCompetitions()
 clubs = loadClubs()
